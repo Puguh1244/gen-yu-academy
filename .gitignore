@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+public/vendor/
+public/config.js
+*.zip
+.DS_Store
+
+reports/
+*staging-accounts*.json
+PRIVATE_LOGIN_GUIDE.md
+public/js/demo/content-data.js

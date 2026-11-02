@@ -1,0 +1,9 @@
+-- Create each account first in Supabase Dashboard > Authentication > Users.
+-- Replace the placeholder with that account's exact UUID. Do not run unchanged.
+-- Role assignment must be done by the project owner, not supplied at public signup.
+-- insert into public.profiles (id,display_name,role)
+-- values ('REPLACE_WITH_AUTH_USER_UUID','School Administrator','admin');
+-- Repeat for a teacher and a parent with role 'teacher' / 'parent'.
+-- Then use portal > School Records to create classes/students and link accounts.
+-- To deactivate a school profile (also revoke sessions in Auth):
+-- update public.profiles set active=false where id='REPLACE_WITH_AUTH_USER_UUID';
