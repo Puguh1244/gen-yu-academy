@@ -1,0 +1,5 @@
+{
+  "framework": null,
+  "buildCommand": "npm run build:portal && npm run build",
+  "outputDirectory": "dist"
+}
