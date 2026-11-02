@@ -1,4 +1,4 @@
-import { createClient } from "../../vendor/supabase.js";
+import { createClient } from "@supabase/supabase-js";
 const config = window.GENYU_CONFIG || {};
 export const configured = Boolean(config.supabaseUrl && config.supabaseKey);
 // User sessions stay within this browser tab. No service_role key is used anywhere.
