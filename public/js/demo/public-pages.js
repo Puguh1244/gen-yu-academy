@@ -7,6 +7,7 @@ function header(page) {
     ["school-life", "School Life", "Kegiatan"],
     ["admissions", "Admissions", "Pendaftaran"],
     ["contact", "Contact", "Kontak"],
+    ["about-website", "About This Website", "Profil Pengembang"],
   ];
   return `<div class="topline">${T("A world of discovery. A childhood full of possibility.", "Dunia penuh penemuan. Masa kecil penuh kemungkinan.")}</div><header class="header"><div class="wrap header-inner">${brand()}<nav class="nav" id="nav" aria-label="${T("Main navigation", "Navigasi utama")}">${labels.map((x) => `<a href="#${x[0]}" class="${page === x[0] ? "active" : ""}" ${page === x[0] ? 'aria-current="page"' : ""}>${T(x[1], x[2])}</a>`).join("")}</nav><div class="tools"><button class="lang" onclick="switchLang()" aria-label="${T("Switch to Bahasa Indonesia", "Ganti ke English")}">${lang === "en" ? "<b>EN</b> / ID" : "EN / <b>ID</b>"}</button><a class="btn compact" href="portal.html">${T("Portal Login", "Masuk Portal")}</a><button class="menu-toggle" aria-controls="nav" aria-expanded="false" onclick="let n=document.getElementById('nav');n.classList.toggle('open');this.setAttribute('aria-expanded',n.classList.contains('open'))">☰</button></div></div></header>`;
 }
@@ -137,6 +138,55 @@ function admissions() {
   ];
   return `<div class="wrap">${heading(T("Admissions", "Pendaftaran"), T("Let’s take the<br>first step together.", "Mari mulai<br>langkah pertama."), T("We look forward to getting to know your child and your family.", "Kami menantikan kesempatan mengenal anak dan keluarga Anda."))}<div class="timeline">${steps.map((x) => `<article class="step"><h3>${T(x[0], x[1])}</h3><p>${T(x[2], x[3])}</p></article>`).join("")}</div><section class="section"><h2>${T("Find your starting point", "Temukan langkah awal")}</h2><div class="table-wrap"><table><thead><tr><th>${T("Programme", "Program")}</th><th>${T("Age guide", "Panduan usia")}</th><th>${T("School days & hours", "Hari & jam belajar")}</th></tr></thead><tbody>${programs.map((p) => `<tr><td>${p[0]}</td><td>${p[1]} ${T("years", "tahun")}</td><td>${T("To be confirmed by Admissions", "Dikonfirmasi tim penerimaan")}</td></tr>`).join("")}</tbody></table></div><p class="small muted">${T("Ages are a proposed guide; final cut-off dates and placement are confirmed by the school. A visit request does not confirm enrolment. Fees, documents and places are provided by Admissions.", "Usia merupakan panduan usulan; batas tanggal dan penempatan ditetapkan sekolah. Permintaan kunjungan tidak berarti diterima sebagai siswa. Biaya, dokumen, dan tempat dikonfirmasi tim penerimaan.")}</p></section><section class="section" style="padding-top:0"><div class="split" style="align-items:start"><div><div class="eyebrow">${T("Start a conversation", "Mulai percakapan")}</div><h2>${T("Book a school visit.", "Ajukan kunjungan sekolah.")}</h2><p class="muted">${T("Choose a preferred date and tell us which programme interests you. The school will confirm the arrangements.", "Pilih tanggal yang diinginkan dan program yang diminati. Sekolah akan mengonfirmasi pengaturannya.")}</p><a class="link" href="#contact">${T("Contact our admissions team", "Hubungi tim penerimaan")} ↗</a></div><div class="card">${enquiryForm()}</div></div></section><section class="section" style="padding-top:0">${admissionDocuments()}<div class="eyebrow">FAQ</div><h2>${T("A few things you may wonder.", "Hal yang mungkin ingin Anda ketahui.")}</h2>${faqs.map((f) => `<details><summary>${T(f[0], f[1])}</summary><p>${T(f[2], f[3])}</p></details>`).join("")}</section></div>`;
 }
+function aboutWebsite() {
+  const contributors = [
+    {
+      index: "01",
+      label: T("Developer", "Pengembang"),
+      name: "Octavia Prima Gennuita",
+      detail: "23010584251",
+      description: T(
+        "Student of the S1 Early Childhood Teacher Education Study Programme, Universitas Negeri Surabaya.",
+        "Mahasiswa S1 Pendidikan Guru Pendidikan Anak Usia Dini, Universitas Negeri Surabaya."
+      )
+    },
+    {
+      index: "02",
+      label: T("Academic Supervisor", "Dosen Pembimbing"),
+      name: "Fatiha Khoirotunnisa Elfahmi, M.Ed., M.Pd"
+    },
+    {
+      index: "03",
+      label: T("Course", "Mata Kuliah"),
+      name: "Edu-Tech for Young Children"
+    },
+    {
+      index: "04",
+      label: T("Website Development Support", "Dukungan Pengembangan Website"),
+      name: "Mr PSW"
+    }
+  ];
+  return `<div class="wrap about-website-page">
+    <section class="about-website-intro" aria-labelledby="about-website-title">
+      <div class="eyebrow">${T("Behind the website", "Di balik website")}</div>
+      <h1 id="about-website-title">${T("About This Website", "Profil Pengembang")}</h1>
+      <p>${T(
+        "People and academic context behind the development of the Gen-Yu Academy website.",
+        "Pengembang dan konteks akademik di balik pembuatan website Gen-Yu Academy."
+      )}</p>
+    </section>
+    <section class="about-website-grid" aria-label="${T("Project contributors", "Kontributor proyek")}">
+      ${contributors.map(person => `<article class="about-website-card">
+        <span class="about-website-number" aria-hidden="true">${person.index}</span>
+        <div class="eyebrow">${person.label}</div>
+        <h2>${person.name}</h2>
+        ${person.detail ? `<p class="about-website-id">${person.detail}</p>` : ""}
+        ${person.description ? `<p class="about-website-description">${person.description}</p>` : ""}
+      </article>`).join("")}
+    </section>
+  </div>`;
+}
+
 function contact() {
   const mapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Jalan Lidah Wetan, Gang VIII, No. 27, Lakarsantri, Surabaya");
   return `<div class="wrap contact-page"><section class="contact-layout" aria-labelledby="contact-title"><div class="contact-location"><a class="contact-brand" href="#home" aria-label="Gen-Yu Academy"><img src="${offlineAsset(`assets/gen-yu-academy-logo.png`)}" width="440" height="367" alt="Gen-Yu Academy"></a><figure class="contact-map"><a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" aria-label="${T("Open the address in Google Maps (new tab)", "Buka alamat di Google Maps (tab baru)")}"><img src="${offlineAsset(`assets/contact/location-map.png`)}" alt="${T("Map of the Jalan Lidah Wetan neighbourhood, Lakarsantri, Surabaya", "Peta area Jalan Lidah Wetan, Lakarsantri, Surabaya")}" width="613" height="484" decoding="async"></a><figcaption><a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">${T("Open in Google Maps", "Buka di Google Maps")} ↗</a></figcaption></figure></div><div class="contact-information"><div class="eyebrow">${T("Let’s connect", "Mari terhubung")}</div><h1 id="contact-title">${T("Contact Gen-Yu Academy", "Kontak Gen-Yu Academy")}</h1><p class="contact-programmes">Toddler · Playgroup · Pre-K · Kindergarten</p><dl class="contact-list"><div><dt>${T("Office", "Alamat")}</dt><dd>Jalan Lidah Wetan, Gang VIII, No. 27,<br>Lakarsantri, Surabaya</dd></div><div><dt>WhatsApp / WA</dt><dd><a href="https://wa.me/62895335786197" target="_blank" rel="noopener noreferrer">089-533-578-6197</a></dd></div><div><dt>${T("Phone", "Telepon")}</dt><dd><a href="tel:+62895335786197">089-533-578-6197</a></dd></div></dl><a class="btn contact-whatsapp" href="https://wa.me/62895335786197" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.7 7.4L3 20.5l1.5-4.6A8.5 8.5 0 1 1 20.5 11.6Z"/><path d="M8.1 7.3c-.8 1-.4 3.1 1.3 4.9s3.9 2.9 5.1 2.2l1.2-1.2-2.5-1.4-.9.9c-1.2-.5-2.2-1.5-2.8-2.7l.9-.9-1.3-2.3Z"/></svg>${T("CHAT GEN-YU ACADEMY", "CHAT GEN-YU ACADEMY")}</a><p class="small muted contact-help">${T("Ask about our programmes, admissions or a school visit.", "Tanyakan program, pendaftaran, atau kunjungan sekolah.")}</p></div></section><section class="contact-enquiry" aria-labelledby="enquiry-title"><div><div class="eyebrow">${T("We’re here to help", "Kami siap membantu")}</div><h2 id="enquiry-title">${T("Send an enquiry", "Ajukan pertanyaan")}</h2><p class="muted">${T("Tell us a little about your family and what you would like to know.", "Ceritakan sedikit tentang keluarga Anda dan informasi yang ingin diketahui.")}</p></div><div class="card">${enquiryForm()}</div></section></div>`;
