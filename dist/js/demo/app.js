@@ -104,6 +104,7 @@ function render(scroll = true) {
     "school-life": schoolLife,
     admissions,
     contact,
+    "about-website": aboutWebsite,
     portal,
   };
   if (!pages[page]) page = "home";
