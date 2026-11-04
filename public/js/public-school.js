@@ -65,7 +65,7 @@ async function boot() {
     const published = contentCards("teacher");
     return curated + (published ? `<div class="grid g3" style="margin-top:24px">${published}</div>` : "");
   };
-  window.eventsCards = () =>
+  window.liveSchoolUpdates = () =>
     `<div class="grid g3">${(feed?.announcements || []).map((x) => `<article class="card"><span class="badge">${tr("School Announcements", "Pengumuman Sekolah")}</span><h3>${e(value(x, "title"))}</h3><p>${e(value(x, "body"))}</p></article>`).join("")}${(feed?.events || []).map((x) => `<article class="card"><span class="badge">${tr("Upcoming Events", "Acara Mendatang")}</span><h3>${e(value(x, "title"))}</h3><p>${e(new Date(x.starts_at).toLocaleString(document.documentElement.lang === "id" ? "id-ID" : "en-GB", { timeZone: "Asia/Jakarta" }))} WIB<br>${e(x.location)}</p><p>${e(value(x, "body"))}</p><a class="link" href="portal.html">${tr("Family event details in the portal", "Rincian acara keluarga di portal")} ↗</a></article>`).join("")}${contentCards("news") || ""}</div>${!feed?.announcements?.length && !feed?.events?.length && !feed?.content?.some((x) => x.kind === "news") ? `<p class="notice">${tr("Published school updates will appear here.", "Informasi sekolah yang diterbitkan akan tampil di sini.")}</p>` : ""}`;
   async function enhance() {
     document
@@ -92,6 +92,21 @@ async function boot() {
     const main = document.getElementById("main");
     if (!main || !feed) return;
     const page = location.hash.slice(1) || "home";
+    // Keep the three curated Around Our School cards visible while
+    // displaying verified Supabase updates in a separate section.
+    if (
+      page === "home" &&
+      !document.getElementById("published-school-updates") &&
+      ((feed.announcements?.length || 0) +
+        (feed.events?.length || 0) +
+        (feed.content?.filter((x) => x.kind === "news").length || 0)) > 0
+    ) {
+      main.insertAdjacentHTML(
+        "beforeend",
+        `<section class="section" id="published-school-updates"><div class="wrap"><div class="section-head"><div><div class="eyebrow">${tr("School updates", "Pembaruan sekolah")}</div><h2>${tr("Latest from our school", "Kabar terbaru dari sekolah")}</h2></div></div>${window.liveSchoolUpdates()}</div></section>`,
+      );
+    }
+
     if (
       page === "school-life" &&
       !document.getElementById("published-resources")
