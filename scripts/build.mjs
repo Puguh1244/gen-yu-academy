@@ -1,6 +1,14 @@
-import { cp, rm, writeFile } from "node:fs/promises";
+import { cp, rm, writeFile, readFile, readdir } from "node:fs/promises";
+import { Script } from "node:vm";
 import { publicConfig } from "../server/config.js";
 import { build } from "esbuild";
+// Check the classic homepage scripts before deploying: they are not bundled by esbuild.
+for (const file of await readdir("public/js/demo")) {
+  if (file.endsWith(".js")) {
+    const path = `public/js/demo/${file}`;
+    new Script(await readFile(path, "utf8"), { filename: path });
+  }
+}
 const config = publicConfig();
 await rm("dist", { recursive: true, force: true });
 await cp("public", "dist", { recursive: true });
