@@ -16,6 +16,7 @@ function footer() {
 }
 function heading(kicker, title, desc = "") {
   return `<div class="page-title"><div class="eyebrow">${kicker}</div><h1>${title}</h1>${desc ? `<p>${desc}</p>` : ""}</div>`;
+}
 
 function programmeCards() {
   const programmeImages = [
