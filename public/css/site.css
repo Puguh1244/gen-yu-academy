@@ -392,6 +392,8 @@ section.section {
   border-radius: var(--radius);
   padding: 27px;
 }
+.around-school-card { overflow: hidden; }
+.around-school-card .around-school-image { display: block; width: calc(100% + 54px); max-width: none; height: 205px; margin: -27px -27px 23px; object-fit: cover; object-position: center; }
 .card p:last-child {
   margin-bottom: 0;
 }
