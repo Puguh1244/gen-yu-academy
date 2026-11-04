@@ -16,9 +16,36 @@ function footer() {
 }
 function heading(kicker, title, desc = "") {
   return `<div class="page-title"><div class="eyebrow">${kicker}</div><h1>${title}</h1>${desc ? `<p>${desc}</p>` : ""}</div>`;
-}
+
 function programmeCards() {
-  return `<div class="grid g4">${programs.map((p, i) => `<article class="card programme"><div class="program-art" aria-hidden="true"><span>${p[6]}</span></div><div class="body"><span class="badge">${p[1]} ${T("years · proposed", "tahun · rancangan")}</span><h3>${p[0]}</h3><p>${T(p[2], p[3])}</p><button class="link" onclick="programmeDetail(${i})">${T("Discover programme", "Lihat program")} ↗</button></div></article>`).join("")}</div>`;
+  const programmeImages = [
+    "toddler.jpg",
+    "playgroup.jpg",
+    "pre-kindergarten.jpg",
+    "kindergarten.jpg",
+  ];
+
+  const programmeAlts = [
+    "Toddler programme photo",
+    "Playgroup programme photo",
+    "Pre-Kindergarten programme photo",
+    "Kindergarten programme photo",
+  ];
+
+  return `<div class="grid g4">${programs.map((p, i) => `
+    <article class="card programme">
+      <img
+        class="programme-photo"
+        src="${offlineAsset(`assets/programmes/${programmeImages[i]}`)}"
+        alt="${programmeAlts[i]}"
+        loading="lazy">
+      <div class="body">
+        <span class="badge">${p[1]} ${T("years · proposed", "tahun · rancangan")}</span>
+        <h3>${p[0]}</h3>
+        <p>${T(p[2], p[3])}</p>
+        <button class="link" onclick="programmeDetail(${i})">${T("Discover programme", "Lihat program")} ↗</button>
+      </div>
+    </article>`).join("")}</div>`;
 }
 function eventsCards() {
   return `<div class="grid g3"><article class="card around-school-card"><img class="around-school-image" src="${offlineAsset(`assets/around-school/your-next-chapter.jpg`)}" alt="Parent welcoming child to school" loading="lazy" onerror="this.style.display='none'"><span class="badge">${T("School announcements", "Pengumuman sekolah")}</span><h3>${T("Your next chapter starts here", "Awal perjalanan bersama")}</h3><p class="muted">${T("Explore our early years programmes and enquire about a school visit. Our team will confirm availability.", "Kenali program PAUD dan ajukan kunjungan. Tim sekolah akan mengonfirmasi ketersediaan.")}</p><a class="link" href="#admissions">${T("Visit admissions", "Lihat pendaftaran")} ↗</a></article><article class="card around-school-card"><img class="around-school-image" src="${offlineAsset(`assets/around-school/united-nations-day.jpg`)}" alt="Children celebrating cultural diversity" loading="lazy" onerror="this.style.display='none'"><span class="badge gold">${T("Upcoming event · Draft", "Acara mendatang · Draf")}</span><h3>United Nations Day</h3><p class="muted">${T("A celebration of cultures, friendship, and learning together. Date and venue to be confirmed.", "Perayaan budaya, persahabatan, dan belajar bersama. Tanggal dan lokasi menunggu konfirmasi.")}</p><button class="link" onclick="eventDetail(false)">${T("View event", "Lihat acara")} ↗</button></article><article class="card around-school-card"><img class="around-school-image" src="${offlineAsset(`assets/around-school/meaningful-milestones.jpg`)}" alt="Child celebrating a learning milestone" loading="lazy" onerror="this.style.display='none'"><span class="badge pink">${T("News & achievements", "Berita & prestasi")}</span><h3>${T("Small efforts. Meaningful milestones.", "Usaha kecil. Pencapaian bermakna.")}</h3><p class="muted">${T("A space to celebrate classroom discoveries and verified school achievements.", "Ruang berbagi penemuan di kelas dan prestasi sekolah yang telah dikonfirmasi.")}</p><button class="link" onclick="newsDetail()">${T("Read more", "Baca selengkapnya")} ↗</button></article></div>${state.announcements
