@@ -1,4 +1,5 @@
 import { publicConfig } from '../server/config.js';
+import { enquiryEmailConfigured } from '../server/enquiry-email.js';
 
 export default function handler(req, res) {
   if (!['GET','HEAD'].includes(req.method)) {
@@ -10,6 +11,8 @@ export default function handler(req, res) {
   res.end(JSON.stringify({
     ok: true,
     supabaseConfigured: !!config.supabaseUrl,
-    adminAccountsConfigured: !!process.env.SUPABASE_SECRET_KEY && !!config.supabaseUrl
+    adminAccountsConfigured: !!process.env.SUPABASE_SECRET_KEY && !!config.supabaseUrl,
+    enquiryEmailConfigured: enquiryEmailConfigured()
   }));
 }
+

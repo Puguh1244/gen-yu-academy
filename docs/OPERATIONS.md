@@ -1,6 +1,14 @@
 # Panduan operasional sekolah
 
-Panduan ini harus ditetapkan penanggung jawabnya sebelum penggunaan data asli. Kode tidak menjadwalkan backup, pemusnahan arsip atau pengiriman email/push.
+Panduan ini harus ditetapkan penanggung jawabnya sebelum penggunaan data asli. Kode tidak menjadwalkan backup, pemusnahan arsip, atau push. Formulir penerimaan mengirim email konfirmasi melalui Gmail setelah permintaan tersimpan.
+
+## Email konfirmasi formulir
+
+Atur `GMAIL_USER` (alamat Gmail pengirim) dan `GMAIL_APP_PASSWORD` (sandi aplikasi Google 16 karakter) sebagai Secret pada Environment Variables Vercel untuk Production, kemudian deploy ulang. Pengisi formulir cukup memasukkan alamat email penerima; tidak perlu akun portal atau password Gmail. Jangan simpan sandi aplikasi di kode, GitHub, atau konfigurasi browser.
+
+Formulir mengirim ke `/api/enquiries`; server menyimpan melalui RPC `submit_enquiry` yang sudah ada, lalu menunggu hasil pengiriman Gmail. Tidak diperlukan migrasi SQL tambahan. Batas database tetap tiga permintaan per alamat email per jam. Email berisi nomor permintaan, program, tanggal kunjungan yang diajukan, dan penjelasan tindak lanjut; isi pertanyaan bebas tidak diteruskan ke email.
+
+`/api/health` menampilkan `enquiryEmailConfigured` untuk memeriksa keberadaan pengaturan, bukan membuktikan Gmail berhasil login. Jika pengiriman gagal, permintaan tetap tersimpan dan formulir menampilkan pemberitahuan bahwa email belum terkirim. Tidak ada percobaan ulang otomatis. Periksa Functions Logs untuk kode seperti `EAUTH` atau `ETIMEDOUT`, serta cek Spam pada email penerima. Uji dengan satu formulir menggunakan alamat email yang Anda kuasai setelah deployment selesai.
 
 ## Akun dan pergantian kelas
 
@@ -31,3 +39,4 @@ Nonaktifkan akun yang terdampak dan cabut akses yang salah; simpan catatan audit
 ## Notifikasi dan tagihan
 
 Pengingat portal bersifat manual dan memperhatikan preferensi kategori. Periksa rekap yang belum merespons dan hubungi keluarga melalui prosedur sekolah bila mendesak. Pembayaran masih diverifikasi admin: cocokkan bukti dengan penerimaan dana, jangan hanya dengan gambar bukti. Koreksi invoice/refund memerlukan prosedur terpisah; jangan mengedit saldo langsung tanpa jejak penyesuaian.
+

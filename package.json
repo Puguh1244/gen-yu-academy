@@ -17,7 +17,8 @@
     "build:portal": "node scripts/build-portal.mjs"
   },
   "dependencies": {
-    "@supabase/supabase-js": "2.118.0"
+    "@supabase/supabase-js": "2.118.0",
+    "nodemailer": "10.3.1"
   },
   "devDependencies": {
     "esbuild": "0.28.2",

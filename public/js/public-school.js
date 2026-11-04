@@ -20,26 +20,36 @@ async function boot() {
         button = form.querySelector("[type=submit]");
       button.disabled = true;
       try {
-        await result(
-          db.rpc("submit_enquiry", {
-            p_name: f.get("name"),
-            p_email: f.get("email"),
-            p_phone: f.get("phone"),
-            p_programme: f.get("programme"),
-            p_age: Number(f.get("age")),
-            p_visit: f.get("date") || null,
-            p_message: f.get("message") || "",
-            p_consent: f.has("consent"),
-            p_website: f.get("website") || "",
+        const response = await fetch("/api/enquiries", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: f.get("name"),
+            email: f.get("email"),
+            phone: f.get("phone"),
+            programme: f.get("programme"),
+            age: f.get("age"),
+            date: f.get("date") || null,
+            message: f.get("message") || "",
+            consent: f.has("consent"),
+            website: f.get("website") || "",
+            language: document.documentElement.lang,
           }),
-        );
+        });
+        const receipt = await response.json().catch(() => null);
+        if (!response.ok || !receipt?.ok)
+          throw new Error(receipt?.error || tr("Unable to send your request. Please try again.", "Permintaan belum terkirim. Silakan coba lagi."));
         form.reset();
         window.openModal(
           tr("Request received", "Permintaan diterima"),
-          `<p>${tr("Thank you. Your request has been received. Our school team will contact you to confirm the schedule.", "Terima kasih. Permintaan Anda telah diterima. Tim sekolah akan menghubungi Anda untuk mengonfirmasi jadwal.")}</p>`,
+          `<p>${tr("Thank you. Your request has been received. Our school team will contact you to confirm the schedule.", "Terima kasih. Permintaan Anda telah diterima. Tim sekolah akan menghubungi Anda untuk mengonfirmasi jadwal.")}</p><p>${receipt.emailSent
+            ? tr("A confirmation email has been sent to the address you entered. Please check your inbox and spam folder.", "Email konfirmasi telah dikirim ke alamat yang Anda isi. Silakan periksa kotak masuk dan folder spam.")
+            : tr("Your request is saved, but we could not send the confirmation email. You do not need to submit the form again.", "Permintaan sudah tersimpan, tetapi email konfirmasi belum dapat dikirim. Anda tidak perlu mengisi ulang formulir.")}</p><p class="small muted">${tr("Request reference", "Nomor permintaan")}: ${e(receipt.id)}</p>`,
         );
       } catch (error) {
-        window.toast(error.message);
+        window.toast(error instanceof TypeError
+          ? tr("Your request could not be confirmed. Please try again later.", "Permintaan belum dapat dikonfirmasi. Silakan coba lagi nanti.")
+          : error.message);
       } finally {
         button.disabled = false;
       }
@@ -177,3 +187,4 @@ if (configured) {
     document.addEventListener("DOMContentLoaded", boot, { once: true });
   else boot();
 }
+

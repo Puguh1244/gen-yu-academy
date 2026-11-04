@@ -27,7 +27,7 @@ Website publik Gen-Yu Academy mencakup:
 - **Tim sekolah** — profil staf pengajar dan administrasi.
 - **Fasilitas** — informasi lingkungan dan sarana belajar.
 - **Artikel** — bacaan serta aktivitas edukatif untuk keluarga.
-- **Penerimaan** — formulir pertanyaan dan minat pendaftaran yang dapat ditindaklanjuti sekolah.
+- **Penerimaan** — formulir pertanyaan dan minat pendaftaran yang dapat ditindaklanjuti sekolah, dengan email konfirmasi otomatis ke alamat pengisi setelah data tersimpan. Pengiriman memerlukan konfigurasi Gmail pada server; lihat [panduan operasional](docs/OPERATIONS.md#email-konfirmasi-formulir).
 - **Kontak** — kanal komunikasi sekolah.
 
 ## Fitur Portal
@@ -116,3 +116,4 @@ Kode sumber: **[Puguh1244/gen-yu-academy](https://github.com/Puguh1244/gen-yu-ac
 *Learning, growing, and connecting together.*
 
 </div>
+

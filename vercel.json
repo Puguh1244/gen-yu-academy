@@ -1,5 +1,9 @@
 {
   "framework": null,
   "buildCommand": "npm run build:portal && npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "functions": {
+    "api/enquiries.js": { "maxDuration": 60 }
+  }
 }
+

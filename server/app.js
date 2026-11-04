@@ -1,4 +1,6 @@
 import { adminApi } from "./admin-api.js";
+import { enquiryApi } from "./enquiry-api.js";
+import { enquiryEmailConfigured } from "./enquiry-email.js";
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { resolve, extname, sep } from "node:path";
@@ -28,6 +30,8 @@ export function createApp(root, env = process.env) {
       "camera=(), microphone=(), geolocation=()",
     );
     if (req.url.startsWith("/api/admin/")) return adminApi(req, res, env);
+    if (req.url.split("?")[0] === "/api/enquiries")
+      return enquiryApi(req, res, env);
     if (!["GET", "HEAD"].includes(req.method)) {
       res.writeHead(405, { Allow: "GET, HEAD" });
       return res.end("Method not allowed");
@@ -44,6 +48,7 @@ export function createApp(root, env = process.env) {
             supabaseConfigured: !!config.supabaseUrl,
             adminAccountsConfigured:
               !!env.SUPABASE_SECRET_KEY && !!config.supabaseUrl,
+            enquiryEmailConfigured: enquiryEmailConfigured(env),
           }),
         );
       }
@@ -79,3 +84,4 @@ export function createApp(root, env = process.env) {
     }
   });
 }
+

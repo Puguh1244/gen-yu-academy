@@ -60,6 +60,7 @@ test("Node serves public content without exposing source or secrets", async (t) 
     ok: true,
     supabaseConfigured: false,
     adminAccountsConfigured: false,
+    enquiryEmailConfigured: false,
   });
 });
 
@@ -101,3 +102,4 @@ test("account administration rejects unsigned and cross-origin requests before c
     ),
   );
 });
+
