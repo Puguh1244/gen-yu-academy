@@ -1361,3 +1361,28 @@ dialog::backdrop {
   .about-website-grid { grid-template-columns: 1fr; }
   .about-website-card { padding: 26px; min-height: 0; }
 }
+
+
+/* Our Learning Approach: image-first cards, responsive at all breakpoints. */
+.learning-approach-card {
+  padding: 0;
+  overflow: hidden;
+}
+.learning-approach-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: cover;
+}
+.learning-approach-card h3,
+.learning-approach-card p {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+.learning-approach-card h3 {
+  margin-top: 20px;
+}
+.learning-approach-card p:last-child {
+  margin-bottom: 24px;
+}
